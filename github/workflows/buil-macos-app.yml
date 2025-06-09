@@ -1,0 +1,31 @@
+name: Build macOS .app
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instala Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instala dependencias
+        run: |
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Genera el .app
+        run: pyinstaller --windowed --onefile --name "PropinasApp" main.py
+
+      - name: Sube el .app como artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: PropinasApp
+          path: dist/PropinasApp.app
