@@ -21,8 +21,8 @@ jobs:
           pip install -r requirements.txt
           pip install pyinstaller
 
-      - name: Genera el .app
-        run: pyinstaller --windowed --onefile --name "PropinasApp" main.py
+      - name: Genera el .app standalone
+        run: pyinstaller --onefile --windowed --name "PropinasApp" main.py
 
       - name: Sube el .app como artefacto
         uses: actions/upload-artifact@v4
